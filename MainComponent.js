@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { Navbar, NavbarBrand } from 'reactstrap';
-
 import Menu from './MenuComponent.js';
 
 import dishes from './dishes.js';
 
 import DishDetail from './DishdetailComponent.js';
+
+import Header from './Header.js';
+
+import Footer from './Footer.js';
 
 class Main extends React.Component {
     constructor(props) {
@@ -19,21 +21,17 @@ class Main extends React.Component {
       }
     
       selectDish(dishId){
-          
         this.setState({ selectedDish: dishId});
       }
-
-    
+      
   render() {
     return (
       <div className="App">
-        <Navbar dark color="primary">
-          <div className="container">
-            <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
-          </div>
-        </Navbar>
+        <Header />
         <Menu dishes={this.state.dishes} onClick={this.selectDish} />
         <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
+        
+        <Footer />
       </div>
     );
   }

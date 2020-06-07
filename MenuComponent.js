@@ -1,5 +1,4 @@
 import React from 'react';
-import DishdetailComponent from './DishdetailComponent.js';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle } from 'reactstrap';
 
