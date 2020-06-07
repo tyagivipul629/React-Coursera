@@ -30,15 +30,15 @@ class DishdetailComponent extends React.Component{
         }
     }
     render(){
-        if(this.props.selectedDish==null)
+        if(this.props.dish==null)
             return (<div></div>);
         else{
         return(
             <div className="row">
             <div className="col-12 col-md-4 m-1">
-            {this.renderDish(this.props.selectedDish)}
+            {this.renderDish(this.props.dish)}
         </div>
-        <div className="col-12 col-md-6 m-1"><h2>Comments</h2>{this.renderComments(this.props.selectedDish.comments)}</div>
+        <div className="col-12 col-md-6 m-1"><h2>Comments</h2>{this.renderComments(this.props.dish.comments)}</div>
         </div>
         );
         }
