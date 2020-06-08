@@ -1,5 +1,8 @@
 import React from 'react';
-import { Navbar, NavbarBrand, Jumbotron } from 'reactstrap';
+import Navbar from 'reactstrap';
+import NavbarBrand from 'reactstrap';
+import Jumbotron from 'reactstrap';
+
 
 export default function(){
     return(

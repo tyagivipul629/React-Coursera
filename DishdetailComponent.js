@@ -1,6 +1,9 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,
-    CardTitle } from 'reactstrap';
+import Card from 'reactstrap';
+import CardImg from 'reactstrap';
+import CardText from 'reactstrap';
+import CardBody from 'reactstrap';
+import CardTitle from 'reactstrap';
 
 
     function RenderDish({dish}){

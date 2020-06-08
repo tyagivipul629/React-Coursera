@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,
-    CardTitle } from 'reactstrap';
-
+import Card from 'reactstrap';
+import CardImg from 'reactstrap';
+import CardTitle from 'reactstrap';
+import CardImgOverlay from 'reactstrap';
 
     function RenderMenuItem({dish, onClick}){
         return(
