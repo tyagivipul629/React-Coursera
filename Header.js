@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from 'reactstrap';
-import NavbarBrand from 'reactstrap';
-import Jumbotron from 'reactstrap';
+import {Navbar} from 'reactstrap';
+import {NavbarBrand} from 'reactstrap';
+import {Jumbotron} from 'reactstrap';
 
 
-export default function(){
+function Header(){
     return(
     <React.Fragment>
       <Navbar dark>
@@ -26,3 +26,4 @@ export default function(){
     );
   
     }
+export default Header;
