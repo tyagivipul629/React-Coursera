@@ -60,7 +60,7 @@ class Contact extends React.Component {
             errors.lastname="Last name should be >= 3";
         else if(this.state.touched.flastname&&lastname.length>10)
             errors.lastname="First name should be <10";
-        const reg=/^\d+$/;
+        const reg=/^[a-zA-Z0-9]+\@[a-zA-Z]+\.[a-zA-Z]+$/;
         if(this.state.touched.telnum && !reg.test(telnum))
             errors.telnum="Only numbers are allowed in Telepehone No.";
         if(this.state.touched.email&&email.split('').filter(e=>e==='@').length!==1)
