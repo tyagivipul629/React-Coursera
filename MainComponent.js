@@ -24,6 +24,7 @@ import promotions from './promotions.js';
 
 import About from './AboutComponent.js';
 
+
 class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -35,7 +36,6 @@ class Main extends React.Component {
         };
         
       }
-      
   render() {
     const HomePage = () => {
       return(
