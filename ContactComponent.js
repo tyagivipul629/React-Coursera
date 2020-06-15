@@ -64,7 +64,11 @@ class Contact extends React.Component {
         if(this.state.touched.telnum && !reg.test(telnum))
             errors.telnum="Only numbers are allowed in Telepehone No.";
         if(this.state.touched.email&&email.split('').filter(e=>e==='@').length!==1)
+<<<<<<< HEAD
             errors.email="Invalid Email";
+=======
+            errors.email="Invalid Email!";
+>>>>>>> ecacb887e4064fdd099e50ce6fdef249708efd5f
         return errors;
     }
     render(){
