@@ -1,5 +1,6 @@
 import React from 'react';
-import {Navbar, Nav, NavItem, NavbarToggler, Collapse} from 'reactstrap';
+import {Navbar, Nav, NavItem, NavbarToggler, Collapse, Button, Modal, 
+    ModalBody, ModalHeader,Form, FormGroup, Input, Label} from 'reactstrap';
 import {NavbarBrand} from 'reactstrap';
 import {Jumbotron} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
@@ -11,8 +12,12 @@ class Header extends React.Component{
     
         this.toggleNav = this.toggleNav.bind(this);
         this.state = {
-          isNavOpen: false
+          isNavOpen: false,
+          isModalOpen: false
         };
+        this.toggleModal = this.toggleModal.bind(this);
+        this.toggleNav=this.toggleNav.bind(this);
+        this.handleLogin=this.handleLogin.bind(this);
       }
 
       toggleNav() {
@@ -20,6 +25,22 @@ class Header extends React.Component{
           isNavOpen: !this.state.isNavOpen
         });
       }
+
+      toggleModal() {
+        this.setState({
+          isModalOpen: !this.state.isModalOpen
+        });
+      }
+
+      handleLogin(event) {
+          console.log(this);
+        this.toggleModal();
+        alert("Username: " + this.username.value + " Password: " + this.password.value
+            + " Remember: " + this.remember.checked);
+        event.preventDefault();
+
+    }
+
 
     render(){
     return(
@@ -43,6 +64,12 @@ class Header extends React.Component{
                                 <NavLink className="nav-link" to='/contactus'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
                             </NavItem>
                             </Nav>
+                            <Nav className="ml-auto" navbar>
+                                <NavItem>
+                                    <Button outline onClick={this.toggleModal}>
+                                        <span className="fa-fa-ssign-in fa-lg"></span>Login</Button>
+                                </NavItem>
+                            </Nav>
                         </Collapse>
                     </div>
                 </Navbar>
@@ -56,9 +83,69 @@ class Header extends React.Component{
                </div>
            </div>
        </Jumbotron>
+       <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+                    <ModalBody>
+                    <Form onSubmit={this.handleLogin}>
+                            <FormGroup>
+                                <Label htmlFor="username">Username</Label>
+                                <Input type="text" id="username" name="username"
+                                    innerRef={(input) => this.username = input} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" id="password" name="password"
+                                    innerRef={(input) => this.password = input}  />
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="remember"
+                                    innerRef={(input) => this.remember = input}  />
+                                    Remember me
+                                </Label>
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">Login</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
     </React.Fragment>
     );
     }
   
     }
 export default Header;
+/*I was trying to check what happenes to ``this`` object inside a method if I don't bind the method inside the constructor. What I found is that the result is different for Form and Button. Below is my code for better understanding:
+```
+import React from 'react';
+import {Button, Form, Input} from 'reactstrap';
+class Test extends React.Component{
+ constructor(props){
+  super(props);
+ }
+
+ handleClick(){
+  console.log(this);} //This gives complete information about the Button object and its properties
+
+handleSubmit(e){
+console.log(this); e.preventDefault();} //This one is undefined
+
+render(){
+  return(
+<>
+   <Form onSubmit={this.handleSubmit} >
+
+    <Input type="submit" name="submit">Submit</Input>
+
+   </Form>
+
+   <Button name="butt1" onClick={this.handleClick}>Click</Button>
+</>
+  );
+  }
+}
+```
+I have checked that my question is different from [this](https://stackoverflow.com/questions/35881959/why-is-this-not-scoped-in-react-form-onsubmit-function) one because in the provided question, the questionner wants to bind ``this`` for the component while in my question, I want ``this`` to refer to Form, just like it is refering to Button.
+
+I am trying to find the reason for this different behaviour, but couldn't succeed. Can you people please give the reason for the same and suggest a way so that ``this`` inside ``handleSubmit`` starts refering to Form object?
+
+Thanks in advance!*/
