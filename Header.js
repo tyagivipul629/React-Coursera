@@ -114,38 +114,3 @@ class Header extends React.Component{
   
     }
 export default Header;
-/*I was trying to check what happenes to ``this`` object inside a method if I don't bind the method inside the constructor. What I found is that the result is different for Form and Button. Below is my code for better understanding:
-```
-import React from 'react';
-import {Button, Form, Input} from 'reactstrap';
-class Test extends React.Component{
- constructor(props){
-  super(props);
- }
-
- handleClick(){
-  console.log(this);} //This gives complete information about the Button object and its properties
-
-handleSubmit(e){
-console.log(this); e.preventDefault();} //This one is undefined
-
-render(){
-  return(
-<>
-   <Form onSubmit={this.handleSubmit} >
-
-    <Input type="submit" name="submit">Submit</Input>
-
-   </Form>
-
-   <Button name="butt1" onClick={this.handleClick}>Click</Button>
-</>
-  );
-  }
-}
-```
-I have checked that my question is different from [this](https://stackoverflow.com/questions/35881959/why-is-this-not-scoped-in-react-form-onsubmit-function) one because in the provided question, the questionner wants to bind ``this`` for the component while in my question, I want ``this`` to refer to Form, just like it is refering to Button.
-
-I am trying to find the reason for this different behaviour, but couldn't succeed. Can you people please give the reason for the same and suggest a way so that ``this`` inside ``handleSubmit`` starts refering to Form object?
-
-Thanks in advance!*/
