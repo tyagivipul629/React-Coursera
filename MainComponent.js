@@ -18,19 +18,27 @@ import {connect} from 'react-redux';
 
 import About from './AboutComponent.js';
 
-import {addComment} from './actionCreator.js';
+import {addComment, fetchDishes} from './actionCreator.js';
 
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
+        this.addComment1=this.addComment1.bind(this);
         
       }
-  render() {
+    componentDidMount(){
+      this.props.dispatch(fetchDishes());
+    }
+    addComment1(dishId, rating, author, comment){
+      this.props.dispatch(addComment(dishId, rating, author, comment));
+    }
+    render() {
     const HomePage = () => {
       return(
           <Home 
-              dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+              dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
+              dishLoading={this.props.dishes.isLoading}
               promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
               leader={this.props.leaders.filter((leader) => leader.featured)[0]}
           />
@@ -38,9 +46,10 @@ class Main extends React.Component {
     }
     const DishWithId = ({match}) => {
       return(
-          <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
+          <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
+            dishLoading={this.props.dishes.isLoading}
             comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} 
-            addComment={this.props.addComment}/>
+            addComment={this.addComment1}/>
       );
     }
 
@@ -49,7 +58,7 @@ class Main extends React.Component {
         <Header />
         <Switch>
           <Route path="/home" component={HomePage} />
-          <Route exact path="/menu" component={()=><Menu dishes={this.props.dishes} />} />
+          <Route exact path="/menu" component={()=><Menu dishes={this.props.dishes.dishes} isLoading={this.props.dishes.isLoading} />} />
           <Route exact path='/contactus' component={Contact} />
           <Route path='/menu/:dishId' component={DishWithId} />
           <Route path='/aboutus' component={()=><About leaders={this.props.leaders} />} />
@@ -69,11 +78,6 @@ const mapStatetoProps=(state)=>{
   }
 };
 
-const mapDispatchToProps = dispatch => ({
-  
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
 
-});
-
-export default withRouter(connect(mapStatetoProps,mapDispatchToProps)(Main));
+export default withRouter(connect(mapStatetoProps)(Main));
 

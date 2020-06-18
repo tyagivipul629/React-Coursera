@@ -127,7 +127,9 @@ class CommentForm extends React.Component{
         }
     }
     const DishdetailComponent=(props)=>{
-        if(props.dish==null)
+        if(props.dishLoading)
+            return(<p>Loading...</p>);
+        else if(props.dish==null)
             return (<div></div>);
         else{
         return(

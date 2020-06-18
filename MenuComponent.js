@@ -19,12 +19,11 @@ import { Link } from 'react-router-dom';
     const Menu=(props)=>{
         const menu = props.dishes.map((dish) => {
             return (
-                <div className="col-12 col-md-5 m-1">
+                <div className="col-12 col-md-5 m-1" key={dish.id}>
                     <RenderMenuItem dish={dish} />
               </div>
             );
         });
-
         return (
           <div className="container">
               <div className="row">
@@ -38,7 +37,7 @@ import { Link } from 'react-router-dom';
                     </div>                
                 </div>
             <div className="row">
-                    {menu}
+                    {props.isLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:menu}
                 </div>
           </div>
         );
