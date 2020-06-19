@@ -61,7 +61,7 @@ class Main extends React.Component {
         <Switch>
           <Route path="/home" component={HomePage} />
           <Route exact path="/menu" component={()=><Menu dishes={this.props.dishes.dishes} isLoading={this.props.dishes.isLoading} />} />
-          <Route exact path='/contactus' component={()=><Contact resetFeedbackForm={()=>this.props.dispatch(actions.reset('feedback1'))} />} />
+          <Route exact path='/contactus' component={Contact} />
           <Route path='/menu/:dishId' component={DishWithId} />
           <Route path='/aboutus' component={()=><About leaders={this.props.leaders} />} />
           <Redirect to="/home" />

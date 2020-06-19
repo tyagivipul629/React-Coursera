@@ -6,17 +6,8 @@ import { Promotions } from './reducers/promotions.js';
 import { Leaders } from './reducers/leaders.js';
 import thunk from 'redux-thunk';
 import {createForms} from 'react-redux-form';
- 
-
-const InitialFeedback = {
-    firstname: '',
-    lastname: '',
-    telnum: '',
-    email: '',
-    agree: false,
-    contactType: 'Tel.',
-    message: ''
-};
+import {formsData} from './reducers/formsData.js';
+import logger from 'redux-logger';
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -25,11 +16,9 @@ export const ConfigureStore = () => {
             comments: Comments,
             promotions: Promotions,
             leaders: Leaders,
-            ...createForms({
-            feedback1: InitialFeedback
-        })
+            formsData: formsData
         }),
-        applyMiddleware(thunk)
+        applyMiddleware(thunk, logger)
     );
     return store;
 }
