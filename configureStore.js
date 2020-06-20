@@ -18,7 +18,7 @@ export const ConfigureStore = () => {
             leaders: Leaders,
             formsData: formsData
         }),
-        applyMiddleware(thunk, logger)
+        applyMiddleware(thunk)
     );
     return store;
 }

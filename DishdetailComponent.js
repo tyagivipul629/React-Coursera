@@ -3,6 +3,8 @@ import { Card, CardImg, CardText, CardBody,
     CardTitle, Breadcrumb, BreadcrumbItem, Button, Row, Col, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { connect } from 'react-redux';
+import {baseUrl} from './baseUrl.js';
 
 const required = (val) => val&&val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -98,7 +100,7 @@ class CommentForm extends React.Component{
     function RenderDish({dish}){
         return(
             <Card key={dish.id}>
-            <CardImg top src={dish.image} alt={dish.name} />
+            <CardImg top src={baseUrl+dish.image} alt={dish.name} />
             <CardBody>
               <CardTitle>{dish.name}</CardTitle>
               <CardText>{dish.description}</CardText>
@@ -127,38 +129,37 @@ class CommentForm extends React.Component{
         }
     }
     const DishdetailComponent=(props)=>{
-        if(props.dishLoading)
-            return(<p>Loading...</p>);
-        else if(props.dish==null)
-            return (<div></div>);
-        else{
         return(
             <>
             <div className="row">
                     <Breadcrumb>
 
                         <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                        <BreadcrumbItem active>{props.isDishLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:props.dish.name}</BreadcrumbItem>
                     </Breadcrumb>
                     <div className="col-12">
-                        <h3>{props.dish.name}</h3>
+                        <h3>{props.isDishLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:props.dish.name}</h3>
                         <hr />
                     </div>                
                 </div>
                 <div className="row">
                     <div className="col-12 col-md-5 m-1">
-                        <RenderDish dish={props.dish} />
+                        {props.isDishLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderDish dish={props.dish} />}
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment}/>
+                        {props.isCommentsLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment}/>}
                     </div>
                 </div>
             
         </>
         );
         }
-    }
     
+const mapStateToProps=(state)=>{
+    return{
+        isDishLoading: state.dishes.isLoading,
+        isCommentsLoading: state.comments.isLoading
+    };
+}
 
-
-export default DishdetailComponent;
+export default connect(mapStateToProps)(DishdetailComponent);

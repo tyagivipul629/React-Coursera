@@ -18,9 +18,11 @@ import {connect} from 'react-redux';
 
 import About from './AboutComponent.js';
 
-import {addComment, fetchDishes} from './actionCreator.js';
+import {addComment, fetchDishes, fetchPromotions, fetchLeaders, fetchComments} from './actionCreator.js';
 
-import {actions} from 'react-redux-form';
+
+
+
 
 
 class Main extends React.Component {
@@ -31,6 +33,9 @@ class Main extends React.Component {
       }
     componentDidMount(){
       this.props.dispatch(fetchDishes());
+      this.props.dispatch(fetchPromotions());
+      this.props.dispatch(fetchLeaders());
+      this.props.dispatch(fetchComments());
     }
     addComment1(dishId, rating, author, comment){
       this.props.dispatch(addComment(dishId, rating, author, comment));
@@ -39,18 +44,13 @@ class Main extends React.Component {
     const HomePage = () => {
       return(
           <Home 
-              dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
-              dishLoading={this.props.dishes.isLoading}
-              promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
-              leader={this.props.leaders.filter((leader) => leader.featured)[0]}
           />
       );
     }
     const DishWithId = ({match}) => {
       return(
           <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
-            dishLoading={this.props.dishes.isLoading}
-            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} 
+            comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} 
             addComment={this.addComment1}/>
       );
     }
