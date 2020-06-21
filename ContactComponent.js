@@ -2,8 +2,9 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem,
     Button, Label,  Col, Row} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, LocalForm, Errors, actions } from 'react-redux-form';
+import { Control, Form, Errors, actions } from 'react-redux-form';
 import { connect } from 'react-redux';
+
 
 const required = (val) =>  val&&val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -18,17 +19,14 @@ class Contact extends React.Component {
             checked: true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeAction=this.changeAction.bind(this);
     }
     
     handleSubmit(value) {
         console.log('Current State is: ' + JSON.stringify(value));
         alert('Current State is: ' + JSON.stringify(value));
+        this.props.dispatch(actions.reset('feedback'));
     }
-    changeAction(model, value){
-        console.log(value);
-            this.props.dispatch({type:'CHANGE_FIELD',payload:{name: model, value: value}});
-    }
+    
 
     render(){
     return(
@@ -74,23 +72,21 @@ class Contact extends React.Component {
                       <h3>Send us your Feedback</h3>
                    </div>
                     <div className="col-12 col-md-9">
-                    <LocalForm model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
+                    <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
-                                    <Control.text model="firstname" id="firstname" name="firstname"
+                                    <Control.text model=".firstname" id="firstname" name="firstname"
                                         placeholder="First Name"
                                         className="form-control"
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
-                                        value={this.props.fields.firstname}
-                                        changeAction={this.changeAction}
-                                        updateOn="change"
+                                        
                                          />
                                          <Errors
                                         className="text-danger"
-                                        model="firstname"
+                                        model=".firstname"
                                         show="touched"
                                         messages={{
                                             required: 'Required ',
@@ -103,19 +99,17 @@ class Contact extends React.Component {
                             <Row className="form-group">
                                 <Label htmlFor="lastname" md={2}>Last Name</Label>
                                 <Col md={10}>
-                                    <Control.text model="lastname" id="lastname" name="lastname"
+                                    <Control.text model=".lastname" id="lastname" name="lastname"
                                         placeholder="Last Name"
                                         className="form-control"
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
-                                        value={this.props.fields.lastname}
-                                        changeAction={this.changeAction}
-                                        updateOn="change"
+                                        
                                          />
                                          <Errors
                                         className="text-danger"
-                                        model="lastname"
+                                        model=".lastname"
                                         show="touched"
                                         messages={{
                                             required: 'Required ',
@@ -128,19 +122,17 @@ class Contact extends React.Component {
                             <Row className="form-group">
                                 <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
                                 <Col md={10}>
-                                    <Control.text model="telnum" id="telnum" name="telnum"
+                                    <Control.text model=".telnum" id="telnum" name="telnum"
                                         placeholder="Tel. Number"
                                         className="form-control"
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15), isNumber
                                         }}
-                                        value={this.props.fields.telnum}
-                                        changeAction={this.changeAction}
-                                        updateOn="change"
+                                        
                                          />
                                          <Errors
                                         className="text-danger"
-                                        model="telnum"
+                                        model=".telnum"
                                         show="touched"
                                         messages={{
                                             required: 'Required ',
@@ -154,16 +146,14 @@ class Contact extends React.Component {
                             <Row className="form-group">
                                 <Label htmlFor="email" md={2}>Email</Label>
                                 <Col md={10}>
-                                    <Control.text model="email" id="email" name="email"
+                                    <Control.text model=".email" id="email" name="email"
                                         placeholder="Email"
                                         className="form-control" validators={{
                                             required, validEmail
-                                        }} value={this.props.fields.email}
-                                        changeAction={this.changeAction}
-                                        updateOn="change" />
+                                        }}  />
                                         <Errors
                                         className="text-danger"
-                                        model="email"
+                                        model=".email"
                                         show="touched"
                                         messages={{
                                             required: 'Required ',
@@ -176,18 +166,16 @@ class Contact extends React.Component {
                                 <Col md={{size: 6, offset: 2}}>
                                     <div className="form-check">
                                         <Label check>
-                                            <Control.checkbox model="agree" name="agree"
-                                                className="form-check-input" defaultChecked={this.props.fields.agree}
-                                                onChange={(ev)=>this.props.dispatch({type:'CHANGE_FIELD',payload:{name:"agree", value: ev.target.checked}})}
+                                            <Control.checkbox model=".agree" name="agree"
+                                                className="form-check-input" 
                                                  /> {' '}
                                                 <strong>May we contact you?</strong>
                                         </Label>
                                     </div>
                                 </Col>
                                 <Col md={{size: 3, offset: 1}}>
-                                    <Control.select model="contactType" name="contactType"
-                                        className="form-control" changeAction={this.changeAction}
-                                        updateOn="change">
+                                    <Control.select model=".contactType" name="contactType"
+                                        className="form-control" >
                                         <option>Tel.</option>
                                         <option>Email</option>
                                     </Control.select>
@@ -196,11 +184,9 @@ class Contact extends React.Component {
                             <Row className="form-group">
                                 <Label htmlFor="message" md={2}>Your Feedback</Label>
                                 <Col md={10}>
-                                    <Control.textarea model="message" id="message" name="message"
+                                    <Control.textarea model=".message" id="message" name="message"
                                         rows="12"
-                                        className="form-control" value={this.props.fields.message} 
-                                        changeAction={this.changeAction}
-                                        updateOn="change" />
+                                        className="form-control"  />
                                 </Col>
                             </Row>
                             <Row className="form-group">
@@ -210,7 +196,7 @@ class Contact extends React.Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                </div>
         </div>
