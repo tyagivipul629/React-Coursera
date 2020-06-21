@@ -3,8 +3,9 @@ import { Card, CardImg, CardText, CardBody,
     CardTitle, Breadcrumb, BreadcrumbItem, Button, Row, Col, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { baseUrl } from './baseUrl';
 import { connect } from 'react-redux';
-import {baseUrl} from './baseUrl.js';
+import { postComment } from './actionCreator.js';
 
 const required = (val) => val&&val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -20,7 +21,7 @@ class CommentForm extends React.Component{
         this.handleSubmit1=this.handleSubmit1.bind(this);
     }
     handleSubmit1(values){
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.dispatch(postComment(this.props.dishId, values.rating, values.author, values.comment));
         
     }
 
@@ -97,6 +98,8 @@ class CommentForm extends React.Component{
     }
 }
 
+
+
     function RenderDish({dish}){
         return(
             <Card key={dish.id}>
@@ -108,7 +111,7 @@ class CommentForm extends React.Component{
         </Card>
         );
     }
-    function RenderComments({comments, dishId, addComment}){
+    function RenderComments({comments, dishId, addComment, dispatch}){
         if(comments==null)
             return <div />;
         else{
@@ -123,7 +126,7 @@ class CommentForm extends React.Component{
             return(
                 <>
                 <div>{comms}</div>
-                <CommentForm dishId={dishId} addComment={addComment}/>
+                <CommentForm dishId={dishId} addComment={addComment} dispatch={dispatch} />
                 </>
             );
         }
@@ -147,7 +150,7 @@ class CommentForm extends React.Component{
                         {props.isDishLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderDish dish={props.dish} />}
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        {props.isCommentsLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment}/>}
+                        {props.isCommentsLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment} dispatch={props.dispatch} />}
                     </div>
                 </div>
             
@@ -156,10 +159,10 @@ class CommentForm extends React.Component{
         }
     
 const mapStateToProps=(state)=>{
-    return{
+    return {
         isDishLoading: state.dishes.isLoading,
         isCommentsLoading: state.comments.isLoading
-    };
+    }
 }
 
 export default connect(mapStateToProps)(DishdetailComponent);

@@ -28,7 +28,6 @@ import {addComment, fetchDishes, fetchPromotions, fetchLeaders, fetchComments} f
 class Main extends React.Component {
     constructor(props) {
         super(props);
-        this.addComment1=this.addComment1.bind(this);
         
       }
     componentDidMount(){
@@ -37,9 +36,7 @@ class Main extends React.Component {
       this.props.dispatch(fetchLeaders());
       this.props.dispatch(fetchComments());
     }
-    addComment1(dishId, rating, author, comment){
-      this.props.dispatch(addComment(dishId, rating, author, comment));
-    }
+    
     render() {
     const HomePage = () => {
       return(
@@ -51,7 +48,7 @@ class Main extends React.Component {
       return(
           <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
             comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} 
-            addComment={this.addComment1}/>
+            />
       );
     }
 
