@@ -4,7 +4,10 @@ import { Card, CardImg, CardText, CardBody,
 import { connect } from 'react-redux';
 import {baseUrl} from './baseUrl.js';
 
-function RenderCard({item}) {
+function RenderCard({item, failed}) {
+
+    if(failed)
+        return(<h4>{failed}</h4>);
 
     return(
         <Card>
@@ -24,13 +27,13 @@ function Home(props) {
         <div className="container">
             <div className="row align-items-start">
                 <div className="col-12 col-md m-1">
-                    {props.isDishLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderCard item={props.dish} />}
+                    {props.isDishLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderCard item={props.dish} failed={props.isDishFailed} />}
                 </div>
                 <div className="col-12 col-md m-1">
-                    {props.isPromotionLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderCard item={props.promotion} />}
+                    {props.isPromotionLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderCard item={props.promotion} failed={props.isPromotionFailed} />}
                 </div>
                 <div className="col-12 col-md m-1">
-                    {props.isLeadersLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderCard item={props.leader} />}
+                    {props.isLeadersLoading?<span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>:<RenderCard item={props.leader} failed={props.isLeaderFailed} />}
                 </div>
             </div>
         </div>
@@ -40,10 +43,13 @@ function Home(props) {
 const mapStateToProps=(state)=>{
     return{
         isDishLoading: state.dishes.isLoading,
+        isDishFailed: state.dishes.errMess,
         dish: state.dishes.dishes.filter((dish) => dish.featured)[0],
         isPromotionLoading: state.promotions.isLoading,
+        isPromotionFailed: state.promotions.errMess,
         promotion: state.promotions.promotions.filter((promo) => promo.featured)[0],
         isLeadersLoading: state.leaders.isLoading,
+        isLeaderFailed: state.leaders.errMess,
         leader: state.leaders.leaders.filter((leader) => leader.featured)[0]
 
     };

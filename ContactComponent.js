@@ -74,7 +74,7 @@ class Contact extends React.Component {
                       <h3>Send us your Feedback</h3>
                    </div>
                     <div className="col-12 col-md-9">
-                    <LocalForm model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
+                    <LocalForm model="feedback" onSubmit={(values) => {console.log("hello");this.handleSubmit(values)}}>
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -84,7 +84,7 @@ class Contact extends React.Component {
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
-                                        value={this.props.fields.firstname}
+                                        value="vipul tyagi"
                                         changeAction={this.changeAction}
                                         updateOn="change"
                                          />
@@ -196,13 +196,14 @@ class Contact extends React.Component {
                             <Row className="form-group">
                                 <Label htmlFor="message" md={2}>Your Feedback</Label>
                                 <Col md={10}>
-                                    <Control.textarea model="message" id="message" name="message"
+                                    <Control.textarea model=".message" id="message" name="message"
                                         rows="12"
                                         className="form-control" value={this.props.fields.message} 
                                         changeAction={this.changeAction}
                                         updateOn="change" />
                                 </Col>
                             </Row>
+                            <Control.text model=".vipul" />
                             <Row className="form-group">
                                 <Col md={{size:10, offset: 2}}>
                                     <Button type="submit" color="primary">
